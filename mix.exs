@@ -32,7 +32,7 @@ defmodule Loxe.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:logfmt, git: "https://github.com/archSeer/logfmt-elixir", branch: "patch-1"},
+      {:logfmt, ">= 3.3.0"},
     ]
   end
 
