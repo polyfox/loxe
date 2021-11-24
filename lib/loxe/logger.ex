@@ -54,9 +54,10 @@ defmodule Loxe.Logger do
 
   for level <- @levels do
     defmacro unquote(level)(a, b \\ nil) do
-      #quote do
-        Elixir.Logger.unquote(level)(Loxe.Formatter.format(a, b))
-      #end
+      lvl = unquote(level)
+      quote do
+        Elixir.Logger.unquote(lvl)(Loxe.Formatter.format(unquote(a), unquote(b)))
+      end
     end
   end
 

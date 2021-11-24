@@ -1,3 +1,7 @@
+# 0.3.1
+
+* Fixed macro quoting issue
+
 # 0.3.0
 
 * `Loxe.Formatter.format/2` will now handle any combination of arguments:
