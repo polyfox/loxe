@@ -1,21 +1,25 @@
 # Loxe
 
-**TODO: Add description**
+Loxe is a layer over Elixir's Logger module formatting its parameters as logfmt.
+
+## Usage
+
+```elixir
+use Loxe.Logger
+
+Loxe.Logger.info "message"
+# => msg="message"
+
+Loxe.Logger.info "message", [a: "Egg", b: "Rice"]
+# => a="Egg" b="Rice" msg="message"
+```
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `loxe` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:loxe, "~> 0.1.0"}
+    {:loxe, git: "https://github.com/polyfox/loxe"}
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/loxe](https://hexdocs.pm/loxe).
-
