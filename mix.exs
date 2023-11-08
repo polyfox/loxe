@@ -4,8 +4,8 @@ defmodule Loxe.Mixfile do
   def project do
     [
       app: :loxe,
-      version: "0.3.2",
-      elixir: "~> 1.11",
+      version: "0.4.0",
+      elixir: "~> 1.14",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -33,6 +33,7 @@ defmodule Loxe.Mixfile do
   defp deps do
     [
       {:logfmt, ">= 3.3.0"},
+      {:benchee, "~> 1.1", only: [:dev]},
     ]
   end
 

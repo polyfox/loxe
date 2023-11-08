@@ -40,8 +40,55 @@ defmodule Loxe.Formatter do
 
   defp do_format(list) when is_list(list) do
     Elixir.Logger.metadata()
+    |> filter_metadata()
     |> Keyword.merge(list)
-    |> Logfmt.encode()
+    |> Loxe.Logfmt.Encoder.encode()
+  end
+
+  def filter_metadata(list) when is_list(list) do
+    Enum.filter(list, &filter_metadata_pair/1)
+  end
+
+  case Application.compile_env(:loxe, :metadata) do
+    nil ->
+      defp filter_metadata_pair({_, _}) do
+        true
+      end
+
+    list when is_list(list) ->
+      except = Keyword.fetch(list, :except)
+      only = Keyword.fetch(list, :only)
+
+      case except do
+        :error ->
+          :ok
+
+        {:ok, list} when is_list(list) ->
+          for key <- list do
+            defp filter_metadata_pair({unquote(key), _}) do
+              false
+            end
+          end
+      end
+
+      case only do
+        :error ->
+          defp filter_metadata_pair({_, _}) do
+            true
+          end
+
+        {:ok, list} when is_list(list) ->
+          for key <- list do
+            defp filter_metadata_pair({unquote(key), _}) do
+              true
+            end
+          end
+
+          # if there is an only filter, all other metadata keys should be left unhandled
+          defp filter_metadata_pair({_, _}) do
+            false
+          end
+      end
   end
 
   defp is_kw_list?([{_key, _value} | _]) do

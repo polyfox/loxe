@@ -17,6 +17,20 @@ defmodule Loxe.LoggerTest do
       test "can log at level given a keyword list" do
         Loxe.Logger.unquote(level)([msg: "Hello, World", a: "Egg"])
       end
+
+      test "can log at level given a keyword list (with other encodable values)" do
+        ref = make_ref()
+
+        Loxe.Logger.unquote(level)([
+          msg: "Hello, World",
+          ref: ref,
+          c: "こにちは",
+          self: self(),
+          atom: :atom,
+          num: 12.4744,
+          int: 880,
+        ])
+      end
     end
 
     describe "#{level}/2" do
